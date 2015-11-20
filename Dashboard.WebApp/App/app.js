@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute', 'mwl.calendar', 'ui.bootstrap', 'ngTouch', 'ngAnimate']);
 
 myApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when(
