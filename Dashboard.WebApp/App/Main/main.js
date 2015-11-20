@@ -32,7 +32,17 @@ myApp.controller("MainController", function ($scope, $uibModal, moment) {
           resizable: true
       }
     ];
-
+    function showModal(action, event) {
+        $uibModal.open({
+            templateUrl: 'modalContent.html',
+            controller: function () {
+                var vm = this;
+                vm.action = action;
+                vm.event = event;
+            },
+            controllerAs: 'vm'
+        });
+    }
     $scope.isCellOpen = true;
     $scope.eventClicked = function (event) {
         showModal('Clicked', event);
