@@ -1,19 +1,26 @@
-﻿<mwl-calendar events="events"
-              view="calendarView"
-              view-title="calendarTitle"
-              current-day="calendarDay"
-              on-event-click="eventClicked(calendarEvent)"
-              on-event-times-changed="eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-              edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-              delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-              on-edit-event-click="eventEdited(calendarEvent)"
-              on-delete-event-click="eventDeleted(calendarEvent)"
-              cell-is-open="isCellOpen"
-              day-view-start="06:00"
-              day-view-end="22:00"
-              day-view-split="30"
-              cell-modifier="modifyCell(calendarCell)">
-</mwl-calendar>
+﻿<div class="row">
+    <div class="col-md-12 text-center">
+
+        <!-- /.row -->
+        <mwl-calendar events="events"
+                      view="calendarView"
+                      view-title="calendarTitle"
+                      current-day="calendarDay"
+                      on-event-click="eventClicked(calendarEvent)"
+                      on-event-times-changed="eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                      edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                      delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                      on-edit-event-click="eventEdited(calendarEvent)"
+                      on-delete-event-click="eventDeleted(calendarEvent)"
+                      cell-is-open="isCellOpen"
+                      day-view-start="06:00"
+                      day-view-end="22:00"
+                      day-view-split="30"
+                      cell-modifier="modifyCell(calendarCell)">
+        </mwl-calendar>
+
+    </div>
+</div>
 
 <script type="text/ng-template" id="modalContent.html">
     <div class="modal-header">

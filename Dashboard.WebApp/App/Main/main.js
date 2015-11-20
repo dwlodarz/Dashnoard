@@ -1,9 +1,8 @@
 ﻿'use strict';
 
-myApp.controller("MainController", function ($scope, $uibModal, moment) {
+myApp.controller("MainController", ['$scope', '$uibModal', 'moment', 'eventService', function ($scope, $uibModal, moment, eventService) {
     $scope.aVariable = 'anExampleValueWithinScope';
     $scope.valueFromService = 'test';
-    debugger;
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
@@ -12,14 +11,14 @@ myApp.controller("MainController", function ($scope, $uibModal, moment) {
           title: 'An event',
           type: 'warning',
           startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
-          endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
+          endsAt: moment().startOf('week').subtract(2, 'days').add(9, 'hours').toDate(),
           draggable: true,
           resizable: true
       }, {
           title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
           type: 'info',
           startsAt: moment().subtract(1, 'day').toDate(),
-          endsAt: moment().add(5, 'days').toDate(),
+          endsAt: moment().subtract(1, 'day').add(1, 'hours').toDate(),
           draggable: true,
           resizable: true
       }, {
@@ -65,4 +64,4 @@ myApp.controller("MainController", function ($scope, $uibModal, moment) {
         $event.stopPropagation();
         event[field] = !event[field];
     };
-});
+}]);
