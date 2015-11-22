@@ -25,6 +25,10 @@ myApp.controller("MainController", ['$scope', '$uibModal', 'moment', 'eventServi
         showModal('Clicked', event);
     };
 
+    $scope.onAddClick = function (event)
+    {
+        debugger;
+    }
     $scope.eventEdited = function (event) {
         showModal('Edited', event);
     };
