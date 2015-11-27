@@ -2,9 +2,7 @@
     'use strict';
     angular.module('app.services', [])
         .service("eventService", ['$q', function ($q) {
-
-            function getStoredEvent() {
-                return [
+            var storedEvents = [
                   {
                       title: 'An event',
                       type: 'warning',
@@ -31,11 +29,19 @@
                       resizable: true,
                       editable: true
                   }
-                ];
+            ];
+            function getStoredEvent() {
+                return storedEvents;
+            }
+
+            function addNewEvent(event)
+            {
+                storedEvents.push(event);
             }
 
             return {
-                GetStoredEvent: getStoredEvent
+                GetStoredEvent: getStoredEvent,
+                AddNewEventEntry: addNewEvent
             };
         }]);
 })();

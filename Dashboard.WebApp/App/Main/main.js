@@ -1,13 +1,13 @@
 ﻿'use strict';
 
-myApp.controller("MainController", ['$scope', '$uibModal', 'moment', 'eventService', function ($scope, $uibModal, moment, eventService) {
+myApp.controller("MainController", ['$scope', '$uibModal','$log', 'moment', 'eventService', function ($scope, $uibModal, $log, moment, eventService) {
     $scope.aVariable = 'anExampleValueWithinScope';
     $scope.valueFromService = 'test';
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
     $scope.events = eventService.GetStoredEvent();
-
+    var addEntryInstance;
 
     function showModal(action, event) {
         $uibModal.open({
@@ -20,14 +20,38 @@ myApp.controller("MainController", ['$scope', '$uibModal', 'moment', 'eventServi
             controllerAs: 'vm'
         });
     }
+
+    function showAddEntry(action, clickedDay) {
+        addEntryInstance = $uibModal.open({
+            templateUrl: 'addEntry.html',
+            controller: 'ModalInstanceController',
+            resolve: {
+                items: function () {
+                    return clickedDay;
+                }
+            }
+        });
+
+        addEntryInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    //function addNewEventEntry()
+    //{
+    //    eventService.AddNewEventEntry()
+    //}
+
     $scope.isCellOpen = true;
     $scope.eventClicked = function (event) {
         showModal('Clicked', event);
     };
 
-    $scope.onAddClick = function (event)
+    $scope.onAddClick = function (clickedDate)
     {
-        debugger;
+        showAddEntry("Add", clickedDate);
     }
     $scope.eventEdited = function (event) {
         showModal('Edited', event);
