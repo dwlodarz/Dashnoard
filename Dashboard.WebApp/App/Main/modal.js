@@ -1,11 +1,26 @@
 ﻿'use strict';
 
-myApp.controller('ModalInstanceController', function ($scope, $uibModalInstance, eventService)
+myApp.controller('ModalInstanceController', ['$scope', '$log', '$uibModalInstance', 'eventService', function ($scope, $log, $uibModalInstance, eventService)
 {
     //$scope.events = eventService.GetStoredEvent();
+    $scope.mytime = new Date();
+
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+    $scope.ismeridian = false;//24H
 
     $scope.ok = function () {
-        $uibModalInstance.close($scope.dt);
+        event = {
+            text: "test",
+            date: $scope.dt,
+            phone: "555-123-456",
+            clientName: "John Doe"
+        }
+        $uibModalInstance.close(event);
+    };
+
+    $scope.changed = function () {
+        $log.log('Time changed to: ' + $scope.mytime);
     };
 
     $scope.cancel = function () {
@@ -83,4 +98,4 @@ myApp.controller('ModalInstanceController', function ($scope, $uibModalInstance,
 
         return '';
     };
-});
+}]);

@@ -32,8 +32,19 @@ myApp.controller("MainController", ['$scope', '$uibModal','$log', 'moment', 'eve
             }
         });
 
-        addEntryInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
+        addEntryInstance.result.then(function (selectedEvent) {
+            var newEvent = {
+                title: 'New event1',
+                type: 'warning',
+                startsAt: selectedEvent.date,
+                endsAt: moment(selectedEvent.date).add(1,'hour').toDate(),
+                draggable: true,
+                resizable: true,
+                editable: true
+            };
+            $scope.events.push(newEvent);
+
+            eventService.AddNewEventEntry(newEvent)
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
