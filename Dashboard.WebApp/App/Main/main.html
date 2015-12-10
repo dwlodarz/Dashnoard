@@ -42,31 +42,77 @@
         <div class="modal-header">
             <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
         </div>
+
         <div class="modal-body">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
-                        <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-6">
-                        <div class="form-group">
-                            <label>Początek:</label>
-                            <uib-timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+            <uib-accordion close-others="oneAtATime">
+                <uib-accordion-group heading="Data i czas" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
+                                <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-6">
+                                <div class="form-group">
+                                    <label>Początek:</label>
+                                    <uib-timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-xs-6">
+                                <div class="form-group">
+                                    <label>Koniec:</label>
+                                    <uib-timepicker ng-model="endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4 col-xs-6">
-                        <div class="form-group">
-                            <label>Koniec:</label>
-                            <uib-timepicker ng-model="endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Szczegóły i opis" is-open="false">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label for="fname">Imię:</label><br/>
+                                                    <input type="text" id="fname" />
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label for="lname">Nazwisko:</label><br/>
+                                                    <input type="text" id="lname" />
+                                                </div>
+                                            </div>
+                                            <div class="row padding">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label for="phone">Nr telefonu:</label><br/>
+                                                    <input type="tel" id="phone" />
+                                                </div>
+                                            </div>
+                                            <div class="row padding">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label for="desc">Opis:</label>
+                                                    <textarea id="desc" class="form-control" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </uib-accordion-group>
+
+            </uib-accordion>
+
             <div class="modal-footer">
                 <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
                 <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
             </div>
+        </div>
+
     </script>
+
 </div>

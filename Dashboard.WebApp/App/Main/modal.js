@@ -95,4 +95,11 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
 
         return '';
     };
+    $scope.oneAtATime = true;
+
+    $scope.status = {
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
+
 }]);
