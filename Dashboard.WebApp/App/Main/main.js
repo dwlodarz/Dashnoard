@@ -23,10 +23,12 @@ myApp.controller("MainController", ['$scope', '$uibModal','$log', 'moment', 'eve
 
     function showAddEntry(action, clickedDay) {
         addEntryInstance = $uibModal.open({
+            scope: $scope,
             templateUrl: 'addEntry.html',
             controller: 'ModalInstanceController',
             resolve: {
                 items: function () {
+                    $scope.calendarDay = clickedDay;
                     return clickedDay;
                 }
             }

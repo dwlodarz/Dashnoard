@@ -1,15 +1,20 @@
 ﻿'use strict';
 
-myApp.controller('ModalInstanceController', ['$scope', '$log', '$uibModalInstance', 'eventService', function ($scope, $log, $uibModalInstance, eventService)
+myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$uibModalInstance', 'eventService', function ($scope,$rootScope, $log, $uibModalInstance, eventService)
 {
     //$scope.events = eventService.GetStoredEvent();
-    $scope.mytime = new Date();
+    $scope.startTime = new Date();
+    $scope.endTime = moment().add(1, 'hours').toDate();
 
     $scope.hstep = 1;
     $scope.mstep = 15;
     $scope.ismeridian = false;//24H
 
     $scope.ok = function () {
+        var hour = moment($scope.startTime).hour();
+        var minute = moment($scope.startTime).minute();
+        $scope.dt = moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate();
+
         event = {
             text: "test",
             date: $scope.dt,
@@ -19,18 +24,14 @@ myApp.controller('ModalInstanceController', ['$scope', '$log', '$uibModalInstanc
         $uibModalInstance.close(event);
     };
 
-    $scope.changed = function () {
-        $log.log('Time changed to: ' + $scope.mytime);
-    };
-
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.today = function () {
-        $scope.dt = new Date();
+    $scope.dayClickedOnCalendar = function () {
+        $scope.dt = $scope.$parent.calendarDay;
     };
-    $scope.today();
+    $scope.dayClickedOnCalendar();
 
     // Disable weekend selection
     $scope.disabled = function (date, mode) {
