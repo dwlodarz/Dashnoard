@@ -44,12 +44,12 @@
         </div>
 
         <div class="modal-body">
-            <uib-accordion close-others="oneAtATime">
+            <uib-accordion close-others="oneAtATime" ng-model="dt">
                 <uib-accordion-group heading="Data i czas" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
-                                <uib-datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                                <uib-datepicker min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
                             </div>
                         </div>
                         <div class="row">
@@ -77,17 +77,17 @@
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <label for="fname">Imię:</label><br/>
+                                                    <label for="fname">Imię:</label><br />
                                                     <input type="text" id="fname" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <label for="lname">Nazwisko:</label><br/>
+                                                    <label for="lname">Nazwisko:</label><br />
                                                     <input type="text" id="lname" />
                                                 </div>
                                             </div>
                                             <div class="row padding">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label for="phone">Nr telefonu:</label><br/>
+                                                    <label for="phone">Nr telefonu:</label><br />
                                                     <input type="tel" id="phone" />
                                                 </div>
                                             </div>
