@@ -1,10 +1,12 @@
 ﻿'use strict';
 
-myApp.controller("MainController", ['$scope', '$uibModal','$log', 'moment', 'eventService', function ($scope, $uibModal, $log, moment, eventService) {
+myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'eventService', function ($scope, $uibModal, $log, moment, eventService) {
+    $scope.singleModel = 1;
+    $scope.calendarView = 'month';
+
     $scope.aVariable = 'anExampleValueWithinScope';
     $scope.valueFromService = 'test';
     //These variables MUST be set as a minimum for the calendar to work
-    $scope.calendarView = 'month';
     $scope.calendarDay = new Date();
     $scope.events = eventService.GetStoredEvent();
     var addEntryInstance;
