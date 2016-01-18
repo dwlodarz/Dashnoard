@@ -36,10 +36,14 @@ myApp.controller("MainController", ['$scope', '$uibModal','$log', 'moment', 'eve
 
         addEntryInstance.result.then(function (selectedEvent) {
             var newEvent = {
-                title: 'New event1',
+                title: selectedEvent.lastName + ', ' + selectedEvent.firstName,
                 type: 'warning',
+                firstName: selectedEvent.firstName,
+                lastName: selectedEvent.lastName,
+                phone: selectedEvent.phone,
+                description: selectedEvent.description,
                 startsAt: selectedEvent.date,
-                endsAt: moment(selectedEvent.date).add(1,'hour').toDate(),
+                endsAt: selectedEvent.endDate,
                 draggable: true,
                 resizable: true,
                 editable: true

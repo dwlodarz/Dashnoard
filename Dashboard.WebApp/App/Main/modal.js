@@ -3,23 +3,34 @@
 myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$uibModalInstance', 'eventService', function ($scope,$rootScope, $log, $uibModalInstance, eventService)
 {
     //$scope.events = eventService.GetStoredEvent();
-    $scope.startTime = new Date();
-    $scope.endTime = moment().add(1, 'hours').toDate();
+    $scope.eventDetails=
+    {
+        firstName:'',
+        lastName: '',
+        phone: '',
+        description: '',
+        startTime: new Date(),
+        endTime: moment().add(1, 'hours').toDate()
+    };
 
     $scope.hstep = 1;
     $scope.mstep = 15;
     $scope.ismeridian = false;//24H
 
     $scope.ok = function () {
-        var hour = moment($scope.startTime).hour();
-        var minute = moment($scope.startTime).minute();
+        var hour = moment($scope.eventDetails.startTime).hour();
+        var minute = moment($scope.eventDetails.startTime).minute();
         $scope.dt = moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate();
+        hour = moment($scope.eventDetails.endTime).hour();
+        minute = moment($scope.eventDetails.endTime).minute();
 
         event = {
-            text: "test",
             date: $scope.dt,
-            phone: "555-123-456",
-            clientName: "John Doe"
+            endDate: moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate(),
+            firstName: $scope.eventDetails.firstName,
+            lastName: $scope.eventDetails.lastName,
+            phone: $scope.eventDetails.phone,
+            description: $scope.eventDetails.description,
         }
         $uibModalInstance.close(event);
     };
