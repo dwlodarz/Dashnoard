@@ -14,7 +14,7 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
     };
 
     $scope.hstep = 1;
-    $scope.mstep = 15;
+    $scope.mstep = 1;
     $scope.ismeridian = false;//24H
 
     $scope.ok = function () {

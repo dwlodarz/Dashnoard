@@ -18,10 +18,20 @@
                 storedEvents = _.reject(storedEvents, function (item) { return item.guid == event.guid; });
                 //delete in API
             }
+
+            function editEvent(event)
+            {
+                var editedEvent = _.findWhere(storedEvents, { guid: event.guid });
+                if (editedEvent)
+                {
+                    //UpdateApi
+                }
+            }
             return {
                 GetStoredEvent: getStoredEvent,
                 AddNewEventEntry: addNewEvent,
-                DeleteEventEntry: deleteEvent
+                DeleteEventEntry: deleteEvent,
+                EditEvent: editEvent
             };
         }]);
 })();

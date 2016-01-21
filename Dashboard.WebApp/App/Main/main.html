@@ -1,6 +1,6 @@
 ﻿<div class="row">
-    <div class="col-md-8 col-sm-8" >
-        </div>
+    <div class="col-md-8 col-sm-8">
+    </div>
     <div class="col-md-3 col-md-offset-1 col-sm-4 text-right">
         <div class="btn-group">
             <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'day'">Dzień</label>
@@ -20,7 +20,7 @@
                       on-event-click="eventClicked(calendarEvent)"
                       on-add-click="onAddClick(calendarEvent)"
                       ondrilldownclick="onDrillDownClick(calendarEvent)"
-                      on-event-times-changed="eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                      on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd; eventTimesChanged(calendarEvent);"
                       edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
                       delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
                       on-edit-event-click="eventEdited(calendarEvent)"
@@ -41,6 +41,8 @@
             <h3 class="modal-title" ng-hide="action === 'Deleted'">Szeczgóły wydarzenia</h3>
         </div>
         <div class="modal-body">
+            <p class="name">Data: <span>{{getFormatedDate(event)}}</span></p>
+            <p class="name">Czas trwania: <span>{{ getEventDuration(event)}}</span></p>
             <p class="name">Imię i nazwisko: <span>{{ event.lastName + ', ' + event.firstName}}</span></p>
             <p class="phone">Nr telefonu: <span>{{ event.phone}}</span></p>
             <p class="description">Opis: <span>{{event.description}}</span></p>
@@ -54,13 +56,15 @@
     </script>
 </div>
 
-    <div ng-controller="ModalInstanceController">
-        <script type="text/ng-template" id="addEntry.html">
-            <div class="modal-header">
-                <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
-            </div>
+<div ng-controller="ModalInstanceController">
+    <script type="text/ng-template" id="addEntry.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
+        </div>
 
-            <div class="modal-body">
+        <div class="modal-body">
+            <form role="form" name="eventForm" novalidate ng-submit="ok()">
+
                 <uib-accordion close-others="oneAtATime" ng-model="dt">
                     <uib-accordion-group heading="Data i czas" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
                         <div class=" container-fluid">
@@ -89,34 +93,32 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <label for="fname">Imię:</label><br />
-                                                        <input type="text" id="fname" ng-model="eventDetails.firstName" />
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <label for="lname">Nazwisko:</label><br />
-                                                        <input type="text" id="lname" ng-model="eventDetails.lastName" />
-                                                    </div>
+                                    <div class="form-group">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label for="fname">Imię:</label><br />
+                                                    <input type="text" name="fname" id="fname" ng-model="eventDetails.firstName" required />
                                                 </div>
-                                                <div class="row padding">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <label for="phone">Nr telefonu:</label><br />
-                                                        <input type="tel" id="phone" ng-model="eventDetails.phone" />
-                                                    </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label for="lname">Nazwisko:</label><br />
+                                                    <input type="text" id="lname" ng-model="eventDetails.lastName" required />
                                                 </div>
-                                                <div class="row padding">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <label for="desc">Opis:</label>
-                                                        <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description"></textarea>
-                                                    </div>
+                                            </div>
+                                            <div class="row padding">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label for="phone">Nr telefonu:</label><br />
+                                                    <input type="tel" id="phone" ng-model="eventDetails.phone" required />
+                                                </div>
+                                            </div>
+                                            <div class="row padding">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label for="desc">Opis:</label>
+                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description"></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,11 +127,13 @@
                 </uib-accordion>
 
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    <button class="btn btn-primary" type="submit" ng-click="ok()" ng-disabled="!eventForm.$valid"><span>OK</span></button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()"><span>Cancel</span></button>
                 </div>
-            </div>
+            </form>
 
-        </script>
+        </div>
 
-    </div>
+    </script>
+
+</div>

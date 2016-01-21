@@ -89,6 +89,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     };
 
     $scope.eventTimesChanged = function (event) {
+        eventService.EditEvent(event);
         showModal('Dropped or resized', event);
     };
 
