@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\Main\eventDetailsModal.js" />
     <Content Include="App\Main\main.html" />
     <Content Include="App\Main\main.js" />
     <Content Include="App\Main\modal.js" />
