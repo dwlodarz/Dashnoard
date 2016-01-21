@@ -37,7 +37,8 @@
 <div ng-controller="EventDetailsModalController">
     <script type="text/ng-template" id="modalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">Szeczgóły wydarzenia</h3>
+            <h3 class="modal-title" ng-hide="action !== 'Deleted'">Czy chcesz usunąć wydarzenie?</h3>
+            <h3 class="modal-title" ng-hide="action === 'Deleted'">Szeczgóły wydarzenia</h3>
         </div>
         <div class="modal-body">
             <p class="name">Imię i nazwisko: <span>{{ event.lastName + ', ' + event.firstName}}</span></p>
@@ -46,8 +47,9 @@
             <p class="description">Guid (test): <span>{{event.guid}}</span></p>
         </div>
         <div class="modal-footer">
-            <button class="btn " ng-click="handleCloseAction(action)">OK</button>
-            <button class="btn btn-primary" ng-show="vm.action === 'Deleted'" ng-click="$close()">Anuluj</button>
+            <button class="btn " ng-click="$close()" ng-hide="action === 'Deleted'">OK</button>
+            <button class="btn " ng-click="handleCloseAction(action)" ng-show="action === 'Deleted'">Tak</button>
+            <button class="btn btn-primary" ng-show="action === 'Deleted'" ng-click="$close()">Anuluj</button>
         </div>
     </script>
 </div>

@@ -19,7 +19,7 @@ myApp.controller('EventDetailsModalController', ['$scope','$rootScope', '$log', 
             eventService.DeleteEventEntry($scope.event);
             $uibModalInstance.close(event);
         }
-       // this.$close();
+        this.$close();
     }
 
 }]);
