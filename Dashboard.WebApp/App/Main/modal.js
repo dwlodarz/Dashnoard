@@ -112,5 +112,4 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
         isFirstOpen: true,
         isFirstDisabled: false
     };
-
 }]);

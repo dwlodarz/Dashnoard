@@ -10,11 +10,18 @@
             function addNewEvent(event)
             {
                 storedEvents.push(event);
+                //push to API
             }
 
+            function deleteEvent(event)
+            {
+                storedEvents = _.reject(storedEvents, function (item) { return item.guid == event.guid; });
+                //delete in API
+            }
             return {
                 GetStoredEvent: getStoredEvent,
-                AddNewEventEntry: addNewEvent
+                AddNewEventEntry: addNewEvent,
+                DeleteEventEntry: deleteEvent
             };
         }]);
 })();

@@ -34,96 +34,100 @@
 
     </div>
 </div>
-
-<script type="text/ng-template" id="modalContent.html">
-    <div class="modal-header">
-        <h3 class="modal-title">Event action occurred!</h3>
-    </div>
-    <div class="modal-body">
-        <p>Action: <pre>{{ vm.action }}</pre></p>
-        <p>Event: <pre>{{ vm.event | json }}</pre></p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="$close()">OK</button>
-    </div>
-</script>
-
-<div ng-controller="ModalInstanceController">
-    <script type="text/ng-template" id="addEntry.html">
+<div ng-controller="EventDetailsModalController">
+    <script type="text/ng-template" id="modalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
+            <h3 class="modal-title">Szeczgóły wydarzenia</h3>
         </div>
-
         <div class="modal-body">
-            <uib-accordion close-others="oneAtATime" ng-model="dt">
-                <uib-accordion-group heading="Data i czas" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                    <div class=" container-fluid">
-                        <div class="row">
-                            <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
-                                <uib-datepicker min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-6">
-                                <div class="form-group">
-                                    <label>Początek:</label>
-                                    <uib-timepicker ng-model="eventDetails.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+            <p class="name">Imię i nazwisko: <span>{{ event.lastName + ', ' + event.firstName}}</span></p>
+            <p class="phone">Nr telefonu: <span>{{ event.phone}}</span></p>
+            <p class="description">Opis: <span>{{event.description}}</span></p>
+            <p class="description">Guid (test): <span>{{event.guid}}</span></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn " ng-click="handleCloseAction(action)">OK</button>
+            <button class="btn btn-primary" ng-show="vm.action === 'Deleted'" ng-click="$close()">Anuluj</button>
+        </div>
+    </script>
+</div>
+
+    <div ng-controller="ModalInstanceController">
+        <script type="text/ng-template" id="addEntry.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
+            </div>
+
+            <div class="modal-body">
+                <uib-accordion close-others="oneAtATime" ng-model="dt">
+                    <uib-accordion-group heading="Data i czas" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        <div class=" container-fluid">
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
+                                    <uib-datepicker min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-4 col-xs-6">
-                                <div class="form-group">
-                                    <label>Koniec:</label>
-                                    <uib-timepicker ng-model="eventDetails.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </uib-accordion-group>
-                <uib-accordion-group heading="Szczegóły i opis" is-open="false">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <form role="form">
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-6">
                                     <div class="form-group">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <label for="fname">Imię:</label><br />
-                                                    <input type="text" id="fname" ng-model="eventDetails.firstName" />
+                                        <label>Początek:</label>
+                                        <uib-timepicker ng-model="eventDetails.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                    <div class="form-group">
+                                        <label>Koniec:</label>
+                                        <uib-timepicker ng-model="eventDetails.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion-group>
+                    <uib-accordion-group heading="Szczegóły i opis" is-open="false">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <label for="fname">Imię:</label><br />
+                                                        <input type="text" id="fname" ng-model="eventDetails.firstName" />
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <label for="lname">Nazwisko:</label><br />
+                                                        <input type="text" id="lname" ng-model="eventDetails.lastName" />
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <label for="lname">Nazwisko:</label><br />
-                                                    <input type="text" id="lname" ng-model="eventDetails.lastName" />
+                                                <div class="row padding">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="phone">Nr telefonu:</label><br />
+                                                        <input type="tel" id="phone" ng-model="eventDetails.phone" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row padding">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label for="phone">Nr telefonu:</label><br />
-                                                    <input type="tel" id="phone" ng-model="eventDetails.phone" />
-                                                </div>
-                                            </div>
-                                            <div class="row padding">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label for="desc">Opis:</label>
-                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description"></textarea>
+                                                <div class="row padding">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="desc">Opis:</label>
+                                                        <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </uib-accordion-group>
+                    </uib-accordion-group>
 
-            </uib-accordion>
+                </uib-accordion>
 
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                </div>
             </div>
-        </div>
 
-    </script>
+        </script>
 
-</div>
+    </div>
