@@ -6,7 +6,15 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
 
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarDay = new Date();
-    $scope.events = eventService.GetStoredEvent();
+
+    eventService.GetStoredEvent()
+        .then(function (result)
+        {
+            $scope.events = result;
+        }, function (error) {
+            console.log(error);
+        });
+
     var addEntryInstance;
     var eventDetailsInstance;
 
@@ -24,7 +32,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             }
         });
         eventDetailsInstance.result.then(function (event) {
-            $scope.events = eventService.GetStoredEvent();
+            eventService.GetStoredEvent().then(function (result) { debugger; $scope.events = result; });
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -76,8 +84,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
         showModal('Clicked', event);
     };
 
-    $scope.onAddClick = function (clickedDate)
-    {
+    $scope.onAddClick = function (clickedDate) {
         showAddEntry("Add", clickedDate);
     }
     $scope.eventEdited = function (event) {

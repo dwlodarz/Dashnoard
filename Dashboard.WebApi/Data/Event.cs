@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Dashboard.WebApi.Models
+namespace Dashboard.WebApi.Data
 {
-    public class EventModel
+    public class Event
     {
         public int? Id { get; set; }
         public Guid Guid { get; set; }
