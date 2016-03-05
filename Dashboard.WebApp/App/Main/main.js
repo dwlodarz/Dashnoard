@@ -81,7 +81,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
 
     $scope.isCellOpen = true;
     $scope.eventClicked = function (event) {
-        showModal('Clicked', event);
+        var a = showModal('Clicked', event);
     };
 
     $scope.onAddClick = function (clickedDate) {
@@ -92,7 +92,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     };
 
     $scope.eventDeleted = function (event) {
-        showModal('Deleted', event);
+        var a = showModal('Deleted', event);
     };
 
     $scope.eventTimesChanged = function (event) {

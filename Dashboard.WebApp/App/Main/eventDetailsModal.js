@@ -30,8 +30,11 @@ myApp.controller('EventDetailsModalController', ['$scope','$rootScope', '$log', 
     {
         if (action === "Deleted")
         {
-            eventService.DeleteEventEntry($scope.event);
-            $uibModalInstance.close(event);
+            eventService.DeleteEventEntry($scope.event).then(function (events)
+            {
+                $scope.events = events;
+                $uibModalInstance.close(event);
+            });
         }
         this.$close();
     }

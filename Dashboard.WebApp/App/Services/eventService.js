@@ -6,7 +6,7 @@
             var storedEvents = [];
 
             function getStoredEvent() {
-                var eventRequest = $http({
+                var addEventRequest = $http({
                     method: 'GET',
                     url:apiUri + 'event'
                 }).then(function (response) {
@@ -19,7 +19,7 @@
                         return storedEvents;
                     }
                 });
-                return eventRequest;
+                return addEventRequest;
             }
 
             function addNewEvent(event)
@@ -30,8 +30,21 @@
 
             function deleteEvent(event)
             {
-                storedEvents = _.reject(storedEvents, function (item) { return item.guid == event.guid; });
-                //delete in API
+                var deleteEventRequest = $http({
+                    method: "DELETE",
+                    url: apiUri + 'event/5',
+                    dataType: 'json',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: event
+                }).then(function (response) {
+                    if (response && response.data) {
+                        storedEvents = _.reject(storedEvents, function (item) { return item.guid == event.guid; });
+                    }
+                    return storedEvents;
+                });
+                return deleteEventRequest;
             }
 
             function editEvent(event)
