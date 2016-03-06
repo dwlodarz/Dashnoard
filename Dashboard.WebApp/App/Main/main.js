@@ -3,6 +3,8 @@
 myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'eventService', function ($scope, $uibModal, $log, moment, eventService) {
     $scope.singleModel = 1;
     $scope.calendarView = 'month';
+    //$scope.viewDate = new Date();
+
 
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarDay = new Date();
@@ -86,6 +88,13 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
         });
     };
 
+    $scope.progressViewDate = function (increment)
+    {
+        if ($scope.calendarView === 'month')
+        {
+            $scope.calendarDay = moment($scope.calendarDay).add(increment, "month").toDate();
+        }
+    }
     $scope.isCellOpen = true;
     $scope.eventClicked = function (event) {
         showModal('Clicked', event);
