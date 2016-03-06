@@ -32,7 +32,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             }
         });
         eventDetailsInstance.result.then(function (event) {
-            eventService.GetStoredEvent().then(function (result) { debugger; $scope.events = result; });
+            eventService.GetStoredEvent().then(function (result) { $scope.events = result; });
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -46,6 +46,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             resolve: {
                 items: function () {
                     $scope.calendarDay = clickedDay;
+                    $scope.action = action;
                     return clickedDay;
                 }
             }
@@ -66,33 +67,34 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
                 resizable: true,
                 editable: true
             };
-            $scope.events.push(newEvent);
+            
 
             eventService.AddNewEventEntry(newEvent)
+            .then(function (result) {
+                $scope.events = result;
+            }, function (error) {
+                console.log(error);
+            });
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
 
-    //function addNewEventEntry()
-    //{
-    //    eventService.AddNewEventEntry()
-    //}
-
     $scope.isCellOpen = true;
     $scope.eventClicked = function (event) {
-        var a = showModal('Clicked', event);
+        showModal('Clicked', event);
     };
 
     $scope.onAddClick = function (clickedDate) {
         showAddEntry("Add", clickedDate);
     }
     $scope.eventEdited = function (event) {
-        showModal('Edited', event);
+        //showModal('Edited', event);
+        showAddEntry('edit', event);
     };
 
     $scope.eventDeleted = function (event) {
-        var a = showModal('Deleted', event);
+        showModal('Deleted', event);
     };
 
     $scope.eventTimesChanged = function (event) {

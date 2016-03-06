@@ -32,7 +32,8 @@ namespace Dashboard.WebApi.Controllers
             return Ok(AutoMapper.Mapper.Map<List<EventModel>>(eventItems));
         }
 
-        public async Task<HttpResponseMessage> PostAsync(EventModel model)
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostAsync(Guid eventGuid, [FromBody]EventModel model)
         {
             if (model != null && model.Id.HasValue)
             {
@@ -49,11 +50,11 @@ namespace Dashboard.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteAsync(int id, [FromBody]EventModel model)
+        public async Task<HttpResponseMessage> DeleteAsync(Guid eventGuid, [FromBody]EventModel model)
         {
-            if (model != null && model.Id.HasValue)
+            if (model != null && eventGuid != Guid.Empty)
             {
-                var eventItem = _dbContext.Events.SingleOrDefault(e => e.Id == model.Id.Value);
+                var eventItem = _dbContext.Events.SingleOrDefault(e => e.Guid == eventGuid);
                 if (eventItem != null)
                 {
                     _dbContext.Events.Remove(eventItem);

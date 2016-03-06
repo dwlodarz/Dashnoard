@@ -8,12 +8,11 @@
             function getStoredEvent() {
                 var addEventRequest = $http({
                     method: 'GET',
-                    url:apiUri + 'event'
+                    url: apiUri + 'event'
                 }).then(function (response) {
                     if (response && response.data) {
                         storedEvents = [];
-                        for(var i =0; i< response.data.length; i++)
-                        {
+                        for (var i = 0; i < response.data.length; i++) {
                             storedEvents.push(convertToCalendarEvent(response.data[i]))
                         }
                         return storedEvents;
@@ -22,17 +21,29 @@
                 return addEventRequest;
             }
 
-            function addNewEvent(event)
-            {
-                storedEvents.push(event);
-                //push to API
+            function addNewEvent(event) {
+                var addEventRequest = $http({
+                    method: "POST",
+                    url: apiUri + 'event?eventGuid=' + event.guid,
+                    dataType: 'json',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: event
+                }).then(function (response) {
+                    if (response && response.data) {
+                        event = convertToCalendarEvent(response.data)
+                        storedEvents.push(event);
+                        return storedEvents;
+                    }
+                });
+                return addEventRequest;
             }
 
-            function deleteEvent(event)
-            {
+            function deleteEvent(event) {
                 var deleteEventRequest = $http({
                     method: "DELETE",
-                    url: apiUri + 'event/5',
+                    url: apiUri + 'event?eventGuid=' + event.guid,
                     dataType: 'json',
                     headers: {
                         "Content-Type": "application/json"
@@ -47,32 +58,31 @@
                 return deleteEventRequest;
             }
 
-            function editEvent(event)
-            {
+            function editEvent(event) {
                 var editedEvent = _.findWhere(storedEvents, { guid: event.guid });
-                if (editedEvent)
-                {
+                if (editedEvent) {
                     //UpdateApi
                 }
             }
 
-            function convertToCalendarEvent(model)
-            {
+            function convertToCalendarEvent(model) {
                 return {
+                    id: model.Id,
                     title: model.Title,
                     type: 'warning',
                     firstName: model.FirstName,
                     lastName: model.LastName,
                     phone: model.Phone,
                     description: model.Description,
-                    startsAt: moment(model.StartsAt).toDate(),
-                    endsAt: moment(model.EndsAt).toDate(),
+                    startsAt: moment.utc(model.StartsAt).toDate(),
+                    endsAt: moment.utc(model.EndsAt).toDate(),
                     guid: model.Guid,
                     draggable: true,
                     resizable: true,
                     editable: true
                 };
             }
+
             return {
                 GetStoredEvent: getStoredEvent,
                 AddNewEventEntry: addNewEvent,
