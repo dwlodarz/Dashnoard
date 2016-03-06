@@ -35,10 +35,16 @@ namespace Dashboard.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> PostAsync(Guid eventGuid, [FromBody]EventModel model)
         {
-            if (model != null && model.Id.HasValue)
+            var eventItem = _dbContext.Events.SingleOrDefault(e => e.Guid == model.Guid);
+            if (eventItem != null)
             {
-                var eventItem = _dbContext.Events.SingleOrDefault(e => e.Id == model.Id.Value);
-                eventItem = AutoMapper.Mapper.Map<Event>(model);
+                eventItem.Description = model.Description;
+                eventItem.FirstName = model.FirstName;
+                eventItem.LastName = model.LastName;
+                eventItem.Phone = model.Phone;
+                eventItem.StartsAt = model.StartsAt;
+                eventItem.EndsAt = model.EndsAt;
+                eventItem.Title = model.Title;
             }
             else
             {

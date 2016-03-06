@@ -52,6 +52,7 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
             firstName: $scope.eventDetails.firstName,
             lastName: $scope.eventDetails.lastName,
             phone: $scope.eventDetails.phone,
+            guid: $scope.eventDetails.guid ? $scope.eventDetails.guid : guid(),
             description: $scope.eventDetails.description,
         }
         $scope.debounce = true;
@@ -135,4 +136,13 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
         isFirstOpen: true,
         isFirstDisabled: false
     };
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+          s4() + '-' + s4() + s4() + s4();
+    }
 }]);

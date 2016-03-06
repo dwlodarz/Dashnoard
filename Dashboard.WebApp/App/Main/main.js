@@ -7,14 +7,15 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarDay = new Date();
 
-    eventService.GetStoredEvent()
-        .then(function (result)
-        {
+    var refreshView = function () {
+        eventService.GetStoredEvent()
+        .then(function (result) {
             $scope.events = result;
         }, function (error) {
             console.log(error);
         });
-
+    };
+    refreshView();
     var addEntryInstance;
     var eventDetailsInstance;
 
@@ -32,7 +33,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             }
         });
         eventDetailsInstance.result.then(function (event) {
-            eventService.GetStoredEvent().then(function (result) { $scope.events = result; });
+            refreshView();
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -67,7 +68,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
                 description: selectedEvent.description,
                 startsAt: selectedEvent.date,
                 endsAt: selectedEvent.endDate,
-                guid: guid(),
+                guid: selectedEvent.guid,
                 draggable: true,
                 resizable: true,
                 editable: true
@@ -76,7 +77,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
 
             eventService.AddNewEventEntry(newEvent)
             .then(function (result) {
-                $scope.events = result;
+                refreshView();
             }, function (error) {
                 console.log(error);
             });
@@ -113,13 +114,5 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
         event[field] = !event[field];
     };
 
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-              .toString(16)
-              .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-          s4() + '-' + s4() + s4() + s4();
-    }
+
 }]);
