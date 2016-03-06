@@ -59,10 +59,16 @@
 <div ng-controller="ModalInstanceController">
     <script type="text/ng-template" id="addEntry.html">
         <div class="modal-header">
-            <h3 class="modal-title">Dodaj wpis do kalendarza</h3>
+            <h3 class="modal-title" ng-show="action === 'Add'">Dodaj wpis do kalendarza</h3>
+            <h3 class="modal-title" ng-show="action === 'edit'">Edytuj wpis w kalendarzu</h3>
         </div>
 
         <div class="modal-body">
+            <div class="alert alert-danger" role="alert" ng-show="showError">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                Nie wszystkie pola zostały uzupełnione.
+            </div>
             <form role="form" name="eventForm" novalidate ng-submit="ok()">
 
                 <uib-accordion close-others="oneAtATime" ng-model="dt">
@@ -114,7 +120,7 @@
                                             <div class="row padding">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <label for="desc">Opis:</label>
-                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description"></textarea>
+                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +133,7 @@
                 </uib-accordion>
 
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit" ng-click="ok()" ng-disabled="!eventForm.$valid"><span>OK</span></button>
+                    <button class="btn btn-primary" type="submit" ng-click="ok()" ng-disabled="showError"><span>OK</span></button>
                     <button class="btn btn-warning" type="button" ng-click="cancel()"><span>Cancel</span></button>
                 </div>
             </form>

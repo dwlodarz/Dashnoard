@@ -45,7 +45,12 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             controller: 'ModalInstanceController',
             resolve: {
                 items: function () {
-                    $scope.calendarDay = clickedDay;
+                    if (action === 'Add') {
+                        $scope.calendarDay = clickedDay;
+                    } else {
+                        $scope.calendarDay = clickedDay.startsAt;
+                        $scope.clickedEvent = clickedDay;
+                    }
                     $scope.action = action;
                     return clickedDay;
                 }

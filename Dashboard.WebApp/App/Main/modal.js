@@ -2,22 +2,44 @@
 
 myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$uibModalInstance', 'eventService', function ($scope,$rootScope, $log, $uibModalInstance, eventService)
 {
+
     //$scope.events = eventService.GetStoredEvent();
-    $scope.eventDetails=
-    {
-        firstName:'',
-        lastName: '',
-        phone: '',
-        description: '',
-        startTime: new Date(),
-        endTime: moment().add(1, 'hours').toDate()
-    };
+    var prepopulateFields = function (action) {
+        if (action === 'Add') {
+            $scope.eventDetails =
+            {
+                firstName: '',
+                lastName: '',
+                phone: '',
+                description: '',
+                startTime: new Date(),
+                endTime: moment().add(1, 'hours').toDate()
+            };
+        } else {
+            $scope.eventDetails = $scope.clickedEvent;
+            $scope.eventDetails.startTime = $scope.clickedEvent.startsAt;
+            $scope.eventDetails.endTime = $scope.clickedEvent.endsAt;
+        }
+    }
+     prepopulateFields($scope.action);
 
     $scope.hstep = 1;
     $scope.mstep = 1;
     $scope.ismeridian = false;//24H
+    $scope.$watch('eventForm.$valid', function (newVal, oldVal) {
+        if ($scope.showError && $scope.showError == true && newVal == true)
+        {
+            $scope.showError = false;
+        }
+    }, true);
 
     $scope.ok = function () {
+        $scope.showError = false;
+        if ($scope.eventForm.$valid == false)
+        {
+            $scope.showError = true;
+            return;
+        }
         var hour = moment($scope.eventDetails.startTime).hour();
         var minute = moment($scope.eventDetails.startTime).minute();
         $scope.dt = moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate();
@@ -32,6 +54,7 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
             phone: $scope.eventDetails.phone,
             description: $scope.eventDetails.description,
         }
+        $scope.debounce = true;
         $uibModalInstance.close(event);
     };
 
