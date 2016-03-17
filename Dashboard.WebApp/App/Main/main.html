@@ -1,12 +1,16 @@
-﻿<div class="row">
-    <div class="col-md-8 col-sm-8">
-    </div>
-    <div class="col-md-3 col-md-offset-1 col-sm-4 text-right">
+﻿<div class="row calendarNav">
+    <div class="col-md-3 col-sm-4 col-xs-4">
         <div class="btn-group">
             <button type="button" class="btn btn-info" ng-click="progressViewDate(-1)"><i class="glyphicon glyphicon-triangle-left"></i> </button>
             <button type="button" class="btn btn-info" ng-click="progressViewDate(1)"><i class="glyphicon glyphicon-triangle-right"></i> </button>
             <!--<button type="button" class="btn btn-info btn-arrow-right">Następny</button>-->
         </div>
+    </div>
+    <div class="col-sm-offset-1 col-md-2 col-sm-2 col-xs-3 col-md-offset-2">
+        <span>{{formatDate(calendarDay)}}</span>
+    </div>
+    <div class="col-md-3 col-md-offset-2 sm-offset-2 col-sm-5 col-xs-5 text-right">
+
         <div class="btn-group">
             <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'day'">Dzień</label>
             <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'month'">Miesiąc</label>
@@ -15,6 +19,7 @@
     </div>
 </div>
 <div class="row">
+
     <div class="col-md-12 text-center">
 
         <!-- /.row -->
@@ -107,7 +112,8 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <div class="container-fluid">
-                                            <div class="row">
+
+                                            <!--<div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <label for="fname">Imię:</label><br />
                                                     <input type="text" name="fname" id="fname" ng-model="eventDetails.firstName" required />
@@ -122,11 +128,15 @@
                                                     <label for="phone">Nr telefonu:</label><br />
                                                     <input type="tel" id="phone" ng-model="eventDetails.phone" required />
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="row padding">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label for="desc">Opis:</label>
-                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description" required></textarea>
+                                                    <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description" required placeholder="Opis..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-cloak>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <autocomplete id="patient" ng-model="yourchoice" data="patients" on-type="updatePatients" attr-placeholder="Dane pacienta..."></autocomplete>
                                                 </div>
                                             </div>
                                         </div>

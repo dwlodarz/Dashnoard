@@ -1,9 +1,11 @@
 ﻿'use strict';
 
-myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$uibModalInstance', 'eventService', function ($scope,$rootScope, $log, $uibModalInstance, eventService)
-{
-
-    //$scope.events = eventService.GetStoredEvent();
+myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$uibModalInstance', 'eventService', 'patientService', function ($scope, $rootScope, $log, $uibModalInstance, eventService, patientService) {
+    
+    $scope.patients = [];
+    $scope.updatePatients = function (typed) {
+        $scope.patients = patientService.QueryPatients(typed);
+    }
     var prepopulateFields = function (action) {
         if (action === 'Add') {
             $scope.eventDetails =
@@ -21,22 +23,25 @@ myApp.controller('ModalInstanceController', ['$scope','$rootScope', '$log', '$ui
             $scope.eventDetails.endTime = $scope.clickedEvent.endsAt;
         }
     }
-     prepopulateFields($scope.action);
+    prepopulateFields($scope.action);
 
     $scope.hstep = 1;
     $scope.mstep = 1;
     $scope.ismeridian = false;//24H
+
+    $scope.getMatches = function (searchText) {
+        return ['a', 'aaa', 'aab', 'aac'];
+    }
+
     $scope.$watch('eventForm.$valid', function (newVal, oldVal) {
-        if ($scope.showError && $scope.showError == true && newVal == true)
-        {
+        if ($scope.showError && $scope.showError == true && newVal == true) {
             $scope.showError = false;
         }
     }, true);
 
     $scope.ok = function () {
         $scope.showError = false;
-        if ($scope.eventForm.$valid == false)
-        {
+        if ($scope.eventForm.$valid == false) {
             $scope.showError = true;
             return;
         }

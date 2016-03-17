@@ -5,7 +5,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     $scope.calendarView = 'month';
     //$scope.viewDate = new Date();
 
-
+    
     //These variables MUST be set as a minimum for the calendar to work
     $scope.calendarDay = new Date();
 
@@ -21,6 +21,10 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     var addEntryInstance;
     var eventDetailsInstance;
 
+    $scope.formatDate = function (date)
+    {
+        return moment(date).format('D MMMM YYYY');
+    }
     function showModal(action, event) {
         eventDetailsInstance = $uibModal.open({
             templateUrl: 'modalContent.html',
@@ -92,7 +96,14 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
     {
         if ($scope.calendarView === 'month')
         {
-            $scope.calendarDay = moment($scope.calendarDay).add(increment, "month").toDate();
+            $scope.calendarDay = moment($scope.calendarDay).add(increment, "months").toDate();
+        }
+        else if ($scope.calendarView === 'day')
+        {
+            $scope.calendarDay = moment($scope.calendarDay).add(increment, "days").toDate();
+        }
+        else if ($scope.calendarView === 'year') {
+            $scope.calendarDay = moment($scope.calendarDay).add(increment, "years").toDate();
         }
     }
     $scope.isCellOpen = true;
