@@ -6,7 +6,7 @@
             var storedEvents = [];
 
             function getStoredEvent() {
-                var addEventRequest = $http({
+                var getEventRequest = $http({
                     method: 'GET',
                     url: apiUri + 'event'
                 }).then(function (response) {
@@ -18,7 +18,7 @@
                         return storedEvents;
                     }
                 });
-                return addEventRequest;
+                return getEventRequest;
             }
 
             function addNewEvent(event) {
@@ -70,12 +70,10 @@
                     id: model.Id,
                     title: model.Title,
                     type: 'warning',
-                    firstName: model.FirstName,
-                    lastName: model.LastName,
-                    phone: model.Phone,
                     description: model.Description,
                     startsAt: moment.utc(model.StartsAt).toDate(),
                     endsAt: moment.utc(model.EndsAt).toDate(),
+                    patient: model.patient,
                     guid: model.Guid,
                     draggable: true,
                     resizable: true,

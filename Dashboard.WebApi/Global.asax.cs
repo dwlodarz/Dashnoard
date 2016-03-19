@@ -13,7 +13,7 @@ namespace Dashboard.WebApi
     {
         protected void Application_Start()
         {
-           // Database.SetInitializer(new DashboardDbInitialization());
+            Database.SetInitializer(new DashboardDbInitialization());
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }

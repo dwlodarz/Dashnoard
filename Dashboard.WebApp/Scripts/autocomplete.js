@@ -10,6 +10,7 @@ app.directive('autocomplete', function () {
         scope: {
             searchParam: '=ngModel',
             suggestions: '=data',
+            display:'=display',
             onType: '=onType',
             onSelect: '=onSelect',
             autocompleteRequired: '='

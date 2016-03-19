@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace Dashboard.WebApi.Controllers
 {
@@ -22,26 +23,23 @@ namespace Dashboard.WebApi.Controllers
 
         public async Task<IHttpActionResult> GetAsync(int id)
         {
-            var eventItem = _dbContext.Events.SingleOrDefault(e => e.Id == id);
+            var eventItem = await _dbContext.Events.Include(e=>e.Patient).SingleOrDefaultAsync(e => e.Id == id);
             return Ok(AutoMapper.Mapper.Map<EventModel>(eventItem));
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var eventItems = _dbContext.Events.ToList();
+            var eventItems = await _dbContext.Events.Include(e => e.Patient).ToListAsync();
             return Ok(AutoMapper.Mapper.Map<List<EventModel>>(eventItems));
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> PostAsync(Guid eventGuid, [FromBody]EventModel model)
         {
-            var eventItem = _dbContext.Events.SingleOrDefault(e => e.Guid == model.Guid);
+            var eventItem = await _dbContext.Events.SingleOrDefaultAsync(e => e.Guid == model.Guid);
             if (eventItem != null)
             {
                 eventItem.Description = model.Description;
-                eventItem.FirstName = model.FirstName;
-                eventItem.LastName = model.LastName;
-                eventItem.Phone = model.Phone;
                 eventItem.StartsAt = model.StartsAt;
                 eventItem.EndsAt = model.EndsAt;
                 eventItem.Title = model.Title;
@@ -60,7 +58,7 @@ namespace Dashboard.WebApi.Controllers
         {
             if (model != null && eventGuid != Guid.Empty)
             {
-                var eventItem = _dbContext.Events.SingleOrDefault(e => e.Guid == eventGuid);
+                var eventItem = await _dbContext.Events.SingleOrDefaultAsync(e => e.Guid == eventGuid);
                 if (eventItem != null)
                 {
                     _dbContext.Events.Remove(eventItem);
@@ -73,6 +71,7 @@ namespace Dashboard.WebApi.Controllers
         private void CreateMaps()
         {
             AutoMapper.Mapper.CreateMap<Event, EventModel>().ReverseMap();
+            AutoMapper.Mapper.CreateMap<Patient, PatientModel>().ReverseMap();
         }
 
         public void Dispose()

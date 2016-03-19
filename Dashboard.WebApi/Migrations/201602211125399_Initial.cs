@@ -14,8 +14,6 @@ namespace Dashboard.WebApi.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Guid = c.Guid(nullable: false),
                         Title = c.String(),
-                        FirstName = c.String(),
-                        LastName = c.String(),
                         StartsAt = c.DateTime(nullable: false),
                         EndsAt = c.DateTime(nullable: false),
                     })

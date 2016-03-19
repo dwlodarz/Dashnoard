@@ -70,8 +70,10 @@
     <Content Include="App\Main\main.js" />
     <Content Include="App\Main\modal.js" />
     <Content Include="App\Services\eventService.js" />
+    <Content Include="App\Services\patientService.js" />
     <Content Include="Assets\Css\angular-bootstrap-calendar.min.css" />
     <Content Include="Assets\Css\app.css" />
+    <Content Include="Assets\Css\autocomplete.css" />
     <Content Include="Assets\Css\calendar.css" />
     <Content Include="Assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Index.html" />
@@ -109,6 +111,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\autocomplete.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\moment.min.js" />
