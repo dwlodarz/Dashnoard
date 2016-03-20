@@ -4,7 +4,7 @@ var app = angular.module('autocomplete', []);
 
 app.directive('autocomplete', function () {
     var index = -1;
-
+    var self = this;
     return {
         restrict: 'E',
         scope: {
@@ -13,6 +13,7 @@ app.directive('autocomplete', function () {
             display:'=display',
             onType: '=onType',
             onSelect: '=onSelect',
+            dynamicClass: '=',
             autocompleteRequired: '='
         },
         controller: ['$scope', function ($scope) {
@@ -59,6 +60,14 @@ app.directive('autocomplete', function () {
                     $scope.onType($scope.searchParam);
             });
 
+            $scope.displayText = function (suggestion)
+            {
+                if (suggestion) {
+                    return suggestion.LastName + ' ' + suggestion.FirstName;
+                }
+                return '';
+            }
+
             // for hovering over suggestions
             this.preSelect = function (suggestion) {
 
@@ -84,8 +93,8 @@ app.directive('autocomplete', function () {
             // selecting a suggestion with RIGHT ARROW or ENTER
             $scope.select = function (suggestion) {
                 if (suggestion) {
-                    $scope.searchParam = suggestion;
-                    $scope.searchFilter = suggestion;
+                    $scope.searchParam = $scope.displayText(suggestion);
+                    $scope.searchFilter = $scope.displayText(suggestion);
                     if ($scope.onSelect)
                         $scope.onSelect(suggestion);
                 }
@@ -247,7 +256,7 @@ app.directive('autocomplete', function () {
             type="text"\
             ng-model="searchParam"\
             placeholder="{{ attrs.placeholder }}"\
-            class="{{ attrs.inputclass }}"\
+            class="{{ attrs.inputclass }} loadinggif"\
             id="{{ attrs.inputid }}"\
             ng-required="{{ autocompleteRequired }}" />\
           <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
@@ -255,13 +264,13 @@ app.directive('autocomplete', function () {
               suggestion\
               ng-repeat="suggestion in suggestions | filter:searchFilter | orderBy:\'toString()\' track by $index"\
               index="{{ $index }}"\
-              val="{{ suggestion }}"\
+              val="{{ suggestion.LastName + \' \'+ suggestion.FirstName + \' \'+suggestion.PhoneNo }}"\
               ng-class="{ active: ($index === selectedIndex) }"\
               ng-click="select(suggestion)"\
               ng-bind-html="suggestion | highlight:searchParam"></li>\
           </ul>\
         </div>'
-    };
+};
 });
 
 app.filter('highlight', ['$sce', function ($sce) {
@@ -274,7 +283,7 @@ app.filter('highlight', ['$sce', function ($sce) {
                 ')',
                 exp = new RegExp(words, 'gi');
             if (words.length) {
-                input = input.replace(exp, "<span class=\"highlight\">$1</span>");
+                input = (input.LastName + ' ' + input.FirstName + ' <span class="phone">' + input.PhoneNo + '</span>').replace(exp, "<span class=\"highlight\">$1</span>");
             }
         }
         return $sce.trustAsHtml(input);

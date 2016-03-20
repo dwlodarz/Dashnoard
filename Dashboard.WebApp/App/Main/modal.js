@@ -4,12 +4,16 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
     
     $scope.patients = [];
     $scope.patientQuery = '';
+    $scope.spinner = '';
+
     $scope.updatePatients = function (typed) {
         typed = typed.trim();
-        if ($scope.patients.length == 0 || $scope.patients[0].trim().charAt(0) != typed.charAt(0)) {
+        if ($scope.patients.length == 0 || $scope.patients[0].LastName.trim().charAt(0).toLowerCase() != typed.charAt(0).toLowerCase()) {
+            $scope.spinner = 'active';
             patientService.QueryPatients(typed).then(function (data)
             {
                 $scope.patients = data;
+                $scope.spinner = '';
             })
         }
     }

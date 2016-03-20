@@ -16,9 +16,6 @@
                 return getEventRequest;
             }
 
-            function queryPatients(searchQuery) {
-                return ['aaa', 'aabc', 'abc', 'adf', 'awe'];
-            }
             return {
                 QueryPatients: getPatientsByQuery
             };
