@@ -76,6 +76,7 @@
     <Content Include="Assets\Css\autocomplete.css" />
     <Content Include="Assets\Css\calendar.css" />
     <Content Include="Assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\images\loader.gif" />
     <Content Include="Index.html" />
     <Content Include="packages.config" />
     <Content Include="Assets\fonts\glyphicons-halflings-regular.eot" />

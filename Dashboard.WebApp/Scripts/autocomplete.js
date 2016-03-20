@@ -13,6 +13,7 @@ app.directive('autocomplete', function () {
             display:'=display',
             onType: '=onType',
             onSelect: '=onSelect',
+            onAddNew:'=onAdd',
             dynamicClass: '=',
             autocompleteRequired: '='
         },
@@ -103,6 +104,18 @@ app.directive('autocomplete', function () {
                 setTimeout(function () { watching = true; }, 1000);
                 $scope.setIndex(-1);
             };
+
+            $scope.addNewUser = function ()
+            {
+                if ($scope.onAddNew)
+                {
+                    $scope.onAddNew();
+                }
+                watching = false;
+                $scope.completing = false;
+                setTimeout(function () { watching = true; }, 1000);
+                $scope.setIndex(-1);
+            }
 
 
         }],
@@ -251,7 +264,7 @@ app.directive('autocomplete', function () {
             });
         },
         template: '\
-        <div class="autocomplete {{ attrs.class }}" id="{{ attrs.id }}">\
+        <div class="autocomplete .dropdown-menu {{ attrs.class }}" id="{{ attrs.id }}">\
           <input\
             type="text"\
             ng-model="searchParam"\
@@ -259,19 +272,29 @@ app.directive('autocomplete', function () {
             class="{{ attrs.inputclass }} loadinggif"\
             id="{{ attrs.inputid }}"\
             ng-required="{{ autocompleteRequired }}" />\
-          <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
+          <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0" class="dropdownAutocomplete">\
             <li\
               suggestion\
               ng-repeat="suggestion in suggestions | filter:searchFilter | orderBy:\'toString()\' track by $index"\
+              ng-show="suggestions && suggestions.length > 0"\
               index="{{ $index }}"\
               val="{{ suggestion.LastName + \' \'+ suggestion.FirstName + \' \'+suggestion.PhoneNo }}"\
               ng-class="{ active: ($index === selectedIndex) }"\
               ng-click="select(suggestion)"\
               ng-bind-html="suggestion | highlight:searchParam"></li>\
+<li role="separator" class="divider"></li>\
+<li ng-click="addNewUser()">\
+              <span class="newPatient">Dodaj nowego pacjenta...</span>\
+              </li>\
+</ul>\
+<ul ng-show="completing && (suggestions | filter:searchFilter).length == 0" class="dropdownAutocomplete" >\
+              <li ng-click="addNewUser()">\
+              <span class="newPatient">Dodaj nowego pacjenta...</span>\
+              </li>\
           </ul>\
         </div>'
 };
-});
+});//<li role="separator" class="divider"></li>
 
 app.filter('highlight', ['$sce', function ($sce) {
     return function (input, searchParam) {

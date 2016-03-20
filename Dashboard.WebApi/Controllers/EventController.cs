@@ -36,21 +36,28 @@ namespace Dashboard.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> PostAsync(Guid eventGuid, [FromBody]EventModel model)
         {
-            var eventItem = await _dbContext.Events.SingleOrDefaultAsync(e => e.Guid == model.Guid);
-            if (eventItem != null)
+            if (ModelState.IsValid)
             {
-                eventItem.Description = model.Description;
-                eventItem.StartsAt = model.StartsAt;
-                eventItem.EndsAt = model.EndsAt;
-                eventItem.Title = model.Title;
+                var eventItem = await _dbContext.Events.SingleOrDefaultAsync(e => e.Guid == model.Guid);
+                if (eventItem != null)
+                {
+                    eventItem.Description = model.Description;
+                    eventItem.StartsAt = model.StartsAt;
+                    eventItem.EndsAt = model.EndsAt;
+                    eventItem.Title = model.Title;
+                }
+                else
+                {
+                    _dbContext.Events.Add(AutoMapper.Mapper.Map<Event>(model));
+                }
+
+                await _dbContext.SaveChangesAsync();
+                return Request.CreateResponse<EventModel>(System.Net.HttpStatusCode.Created, model);
             }
             else
             {
-                _dbContext.Events.Add(AutoMapper.Mapper.Map<Event>(model));
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            await _dbContext.SaveChangesAsync();
-            return Request.CreateResponse<EventModel>(System.Net.HttpStatusCode.Created, model);
         }
 
         [HttpDelete]

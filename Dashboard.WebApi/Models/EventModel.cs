@@ -25,6 +25,7 @@ namespace Dashboard.WebApi.Models
         [Required]
         public DateTime EndsAt { get; set; }
 
+        [Required]
         public PatientModel Patient { get; set; }
     }
 }

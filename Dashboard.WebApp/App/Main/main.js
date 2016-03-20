@@ -68,9 +68,7 @@ myApp.controller("MainController", ['$scope', '$uibModal', '$log', 'moment', 'ev
             var newEvent = {
                 title: selectedEvent.lastName + ', ' + selectedEvent.firstName + ', ' + s.truncate(selectedEvent.description, 20) + '...',
                 type: 'warning',
-                firstName: selectedEvent.firstName,
-                lastName: selectedEvent.lastName,
-                phone: selectedEvent.phone,
+                patient: selectedEvent.patient,
                 description: selectedEvent.description,
                 startsAt: selectedEvent.date,
                 endsAt: selectedEvent.endDate,

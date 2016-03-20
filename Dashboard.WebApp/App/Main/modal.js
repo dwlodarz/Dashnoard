@@ -5,7 +5,19 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
     $scope.patients = [];
     $scope.patientQuery = '';
     $scope.spinner = '';
+    $scope.addNewUserView = false;
 
+    $scope.openAddNewUser = function ()
+    {
+        $scope.addNewUserView = true;
+    }
+
+    $scope.onSelectedPatient = function (selectedPatient)
+    {
+        if (selectedPatient) {
+            $scope.eventDetails.patient = selectedPatient;
+        }
+    }
     $scope.updatePatients = function (typed) {
         typed = typed.trim();
         if ($scope.patients.length == 0 || $scope.patients[0].LastName.trim().charAt(0).toLowerCase() != typed.charAt(0).toLowerCase()) {
@@ -21,9 +33,7 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
         if (action === 'Add') {
             $scope.eventDetails =
             {
-                firstName: '',
-                lastName: '',
-                phone: '',
+                patient:{},
                 description: '',
                 startTime: new Date(),
                 endTime: moment().add(1, 'hours').toDate()
@@ -65,9 +75,7 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
         event = {
             date: $scope.dt,
             endDate: moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate(),
-            firstName: $scope.eventDetails.firstName,
-            lastName: $scope.eventDetails.lastName,
-            phone: $scope.eventDetails.phone,
+            patient: $scope.eventDetails.patient,
             guid: $scope.eventDetails.guid ? $scope.eventDetails.guid : guid(),
             description: $scope.eventDetails.description,
         }
