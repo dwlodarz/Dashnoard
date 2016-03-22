@@ -44,6 +44,32 @@ namespace Dashboard.WebApi.Controllers
             return Ok(AutoMapper.Mapper.Map<List<PatientModel>>(filteredPatiet));
         }
 
+        [HttpPost]
+        public async Task<HttpResponseMessage> Post(Guid patientGuid, [FromBody]PatientModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingPatient = await _dbContext.Patients.SingleOrDefaultAsync(p => p.Guid == patientGuid);
+                if (existingPatient != null)
+                {
+                    existingPatient.LastName = model.LastName;
+                    existingPatient.FirstName = model.FirstName;
+                    existingPatient.PhoneNo = model.PhoneNo;
+                    existingPatient.AdditionalInfo = model.AdditionalInfo;
+                }
+                else
+                {
+                    _dbContext.Patients.Add(AutoMapper.Mapper.Map<Patient>(model));
+                }
+                await _dbContext.SaveChangesAsync();
+                return Request.CreateResponse<PatientModel>(System.Net.HttpStatusCode.Created, model);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+
         private void CreateMaps()
         {
             AutoMapper.Mapper.CreateMap<Patient, PatientModel>().ReverseMap();

@@ -21,6 +21,7 @@ namespace Dashboard.WebApi.Controllers
             CreateMaps();
         }
 
+        [HttpGet]
         public async Task<IHttpActionResult> GetAsync(int id)
         {
             var eventItem = await _dbContext.Events.Include(e=>e.Patient).SingleOrDefaultAsync(e => e.Id == id);

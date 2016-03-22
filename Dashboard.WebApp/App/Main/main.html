@@ -115,12 +115,13 @@
                                             <div class="container-fluid">
                                                 <div class="row padding">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description" required placeholder="Opis..."></textarea>
+                                                        <textarea id="desc" class="form-control" rows="3" ng-model="eventDetails.description" placeholder="Opis..." ng-required="!addNewUserView"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row" ng-cloak>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <autocomplete on-add="openAddNewUser" id="patient" on-select="onSelectedPatient" ng-model="patientQuery" data="patients" on-type="    updatePatients" attr-placeholder="Dane pacienta..." ng-class="spinner"></autocomplete>
+                                                        <autocomplete on-add="openAddNewUser" id="patient" on-select="onSelectedPatient" ng-model="patientQuery" data="patients"
+                                                                      on-type="updatePatients" attr-placeholder="Dane pacienta..." ng-class="spinner" autocomplete-required="!addNewUserView"></autocomplete>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,17 +141,17 @@
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <label for="fname">Imię:</label><br />
-                                            <input type="text" name="fname" id="fname" ng-model="userAdd.firstName" required />
+                                            <input type="text" name="fname" id="fname" ng-model="newPatient.FirstName" ng-required="addNewUserView" />
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <label for="lname">Nazwisko:</label><br />
-                                            <input type="text" id="lname" ng-model="userAdd.lastName" required />
+                                            <input type="text" id="lname" ng-model="newPatient.LastName" ng-required="addNewUserView" />
                                         </div>
                                     </div>
                                     <div class="row padding">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label for="phone">Nr telefonu:</label><br />
-                                            <input type="tel" id="phone" ng-model="userAdd.phone" required />
+                                            <input type="tel" id="phone" ng-model="newPatient.PhoneNo" ng-required="addNewUserView" />
                                         </div>
                                     </div>
                                 </div>
@@ -159,8 +160,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit" ng-click="ok()" ng-disabled="showError"><span>Dodaj</span></button>
-                    <button class="btn btn-warning" type="button" ng-click="cancel()"><span>Anuluj</span></button>
+                    <button class="btn btn-primary" type="submit" ng-click="ok()" ng-disabled="showError" ng-hide="addNewUserView"><span>Dodaj</span></button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()" ng-hide="addNewUserView"><span>Anuluj</span></button>
+
+                    <button class="btn btn-primary" type="submit" ng-click="addUser()" ng-disabled="showError" ng-show="addNewUserView"><span>Dodaj</span></button>
+                    <button class="btn btn-warning" type="button" ng-click="closeAddNewUser()" ng-show="addNewUserView"><span>Anuluj</span></button>
                 </div>
             </form>
 

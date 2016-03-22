@@ -1,15 +1,22 @@
 ﻿'use strict';
 
 myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$uibModalInstance', 'eventService', 'patientService', function ($scope, $rootScope, $log, $uibModalInstance, eventService, patientService) {
-    
+    var self = this;
     $scope.patients = [];
     $scope.patientQuery = '';
     $scope.spinner = '';
     $scope.addNewUserView = false;
+    $scope.newPatient = {};
 
     $scope.openAddNewUser = function ()
     {
+        $scope.newPatient = {};
         $scope.addNewUserView = true;
+    }
+
+    $scope.closeAddNewUser = function ()
+    {
+        $scope.addNewUserView = false;
     }
 
     $scope.onSelectedPatient = function (selectedPatient)
@@ -38,6 +45,14 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
                 startTime: new Date(),
                 endTime: moment().add(1, 'hours').toDate()
             };
+            $scope.newPatient =
+                {
+                    Guid: guid(),
+                    FirstName: '',
+                    LastName: '',
+                    PhoneNo: '',
+                    AdditionalInfo: ''
+                }
         } else {
             $scope.eventDetails = $scope.clickedEvent;
             $scope.eventDetails.startTime = $scope.clickedEvent.startsAt;
@@ -50,22 +65,31 @@ myApp.controller('ModalInstanceController', ['$scope', '$rootScope', '$log', '$u
     $scope.mstep = 1;
     $scope.ismeridian = false;//24H
 
-    $scope.getMatches = function (searchText) {
-        return ['a', 'aaa', 'aab', 'aac'];
-    }
-
     $scope.$watch('eventForm.$valid', function (newVal, oldVal) {
         if ($scope.showError && $scope.showError == true && newVal == true) {
             $scope.showError = false;
         }
     }, true);
 
-    $scope.ok = function () {
+    this.checkForFormValidity = function ()
+    {
         $scope.showError = false;
         if ($scope.eventForm.$valid == false) {
             $scope.showError = true;
-            return;
+            return false;
         }
+        return true;
+    }
+
+    $scope.addUser = function ()
+    {
+        if (!self.checkForFormValidity()) { return; }
+        $scope.closeAddNewUser();
+    }
+
+    $scope.ok = function () {
+        if (!self.checkForFormValidity()) { return; }
+
         var hour = moment($scope.eventDetails.startTime).hour();
         var minute = moment($scope.eventDetails.startTime).minute();
         $scope.dt = moment($scope.dt).startOf('day').hour(hour).minute(minute).toDate();
