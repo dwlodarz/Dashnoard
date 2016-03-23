@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Dashboard.WebApi.Data
+namespace Dashboard.Data.Entities
 {
     public class Event
     {

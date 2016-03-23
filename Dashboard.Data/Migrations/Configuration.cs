@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-
-namespace Dashboard.WebApi.Data
+﻿namespace Dashboard.WebApi.Migrations
 {
-    public class DashboardDbInitialization : DropCreateDatabaseIfModelChanges<DashboardContext>
+    using Dashboard.Data.Entities;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<DashboardContext>
     {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
+
         protected override void Seed(DashboardContext context)
         {
             //System.Diagnostics.Debugger.Launch();
@@ -26,7 +32,7 @@ namespace Dashboard.WebApi.Data
             deafaultEvents.Add(new Event() { Patient = context.Patients.First(), Description = "wizyta kontrolna desc1", StartsAt = DateTime.Now.AddDays(1), EndsAt = DateTime.Now.AddDays(1.1), Guid = Guid.NewGuid(), Title = "Wizyta kontrolna1" });
             deafaultEvents.Add(new Event() { Patient = context.Patients.First(), Description = "wizyta kontrolna desc2", StartsAt = DateTime.Now.AddDays(2), EndsAt = DateTime.Now.AddDays(2.1), Guid = Guid.NewGuid(), Title = "Wizyta kontrolna2" });
 
-            foreach ( var item in deafaultEvents)
+            foreach (var item in deafaultEvents)
                 context.Events.Add(item);
 
             base.Seed(context);

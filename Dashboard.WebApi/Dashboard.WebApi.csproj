@@ -90,22 +90,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
-    <Compile Include="Data\DashboardContext.cs" />
-    <Compile Include="Data\DashboardDbInitialization.cs" />
-    <Compile Include="Data\Event.cs" />
-    <Compile Include="Data\Patient.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602211125399_Initial.cs" />
-    <Compile Include="Migrations\201602211125399_Initial.Designer.cs">
-      <DependentUpon>201602211125399_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603191535386_PatientMigration.cs" />
-    <Compile Include="Migrations\201603191535386_PatientMigration.Designer.cs">
-      <DependentUpon>201603191535386_PatientMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,12 +110,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602211125399_Initial.resx">
-      <DependentUpon>201602211125399_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603191535386_PatientMigration.resx">
-      <DependentUpon>201603191535386_PatientMigration.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Dashboard.Data\Dashboard.Data.csproj">
+      <Project>{81f88f56-db36-41cf-8f8f-f66d5898ab44}</Project>
+      <Name>Dashboard.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

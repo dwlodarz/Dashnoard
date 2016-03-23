@@ -1,4 +1,4 @@
-namespace Dashboard.WebApi.Data
+namespace Dashboard.Data.Entities
 {
     using System;
     using System.Data.Entity;

@@ -1,5 +1,4 @@
-﻿using Dashboard.WebApi.Data;
-using Dashboard.WebApi.Models;
+﻿using Dashboard.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Data.Entity;
+using Dashboard.Data.Entities;
 
 namespace Dashboard.WebApi.Controllers
 {
